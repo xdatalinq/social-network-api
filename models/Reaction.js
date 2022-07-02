@@ -25,10 +25,19 @@ const ReactionSchema = new Schema(
   {
     toJSON: {
       getters: true,
+      virtuals: true,
     },
   }
 );
 
-const Reaction = model('Reaction', ReactionSchema);
+// get total count of comments and replies on retrieval
+ReactionSchema.virtual("reactionCount").get(function () {
+  return this.reactions.reduce(
+    (total, reactions) => total + reactions.length + 1,
+    0
+  );
+});
+
+const Reaction = model("Reaction", ReactionSchema);
 
 module.exports = Reaction;
