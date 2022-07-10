@@ -68,13 +68,31 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
+  // add reaction
   addReaction({ body }, res) {
- //look into add to set make sure we are updating the thought 
+    Thought.findOneAndUpdate(
+      { $addToSet: { reactions: body } },
+      { new: true, runValidators: true }
+    )
+      .then((dbThoughtData) => {
+        if (!dbThoughtData) {
+          res.status(404).json({ message: "No Thought found with this id!" });
+          return;
+        }
+        res.json(dbThoughtData);
+      })
+      .catch((err) => res.json(err));
   },
 
   // delete reaction
   removeReaction({ params }, res) {
-//think about how to removea reaction from the thought model reactions array. what is the opposite of $push
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $pull: { reactions: { reactionId: params.reactionId } } },
+      { new: true }
+    )
+      .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => res.json(err));
   },
 };
 
