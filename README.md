@@ -1,3 +1,7 @@
+Walkthrough video: https://drive.google.com/file/d/1Qv_x3pRq_j44WNNb0U4z2aSEMwnTenv0/view
+Repo: https://github.com/xdatalinq/social-network-api
+
+
 User Story
 
 AS A social media startup
